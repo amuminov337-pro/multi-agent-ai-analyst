@@ -9,7 +9,7 @@ A feature is only marked done when its "Done when" condition is demonstrated liv
 | F2 | Ingestion & vector store | 1 | 10 | ✅ done | 2026-07-25 |
 | F3 | Retriever agent | 2 | 6 | ✅ done | 2026-07-26 |
 | F4 | Web agent (Tavily) | 2 | 6 | ✅ done | 2026-07-26 |
-| F5 | Data agent — text-to-SQL | 2 | 10 | ⬜ todo | — |
+| F5 | Data agent — text-to-SQL | 2 | 10 | ✅ done | 2026-07-26 |
 | F6 | Code agent — Python | 2 | 8 | ⬜ todo | — |
 | F7 | Supervisor / Router | 3 | 10 | ⬜ todo | — |
 | F8 | Critic / Verifier | 3 | 7 | ⬜ todo | — |
@@ -20,11 +20,11 @@ A feature is only marked done when its "Done when" condition is demonstrated liv
 | F13 | Streaming frontend | 5 | 5 | ⬜ todo | — |
 | F14 | Deployment | 5 | 5 | ⬜ todo | — |
 
-**Earned so far: 27 / 100**
+**Earned so far: 37 / 100**
 
 **Phase 1 · Foundation: ✅ complete (15/15)**
 
-**Phase 2 · Specialist agents: F3, F4 done, F5–F6 remaining**
+**Phase 2 · Specialist agents: F3, F4, F5 done, F6 remaining**
 
 ## F1 — Shared state & config (5/5)
 
@@ -58,6 +58,15 @@ A feature is only marked done when its "Done when" condition is demonstrated liv
   no exception when `TAVILY_API_KEY` is absent.
 - Verified with `python scripts/check_f4.py` → PASS (live search + graceful
   skip both confirmed).
+
+## F5 — Data agent / Text-to-SQL (10/10)
+
+- `ai/agents/data_sql.py` — text-to-SQL agent; SELECT-only guard rejects
+  DROP/DELETE/UPDATE/INSERT/ALTER/PRAGMA/ATTACH, multi-statement and
+  comment-smuggling attempts; DB opened read-only at the OS level.
+- Verified with `python scripts/check_f5.py` → PASS: correct answers on 3
+  ground-truth questions, 10/10 malicious SQL attacks rejected, OS-level
+  read-only connection confirmed (write blocked by SQLite itself).
 
 ## Final deliverables checklist (collect as we go)
 

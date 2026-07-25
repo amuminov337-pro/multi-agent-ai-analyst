@@ -1,9 +1,13 @@
 """Specialist and orchestrator agents for the Multi-Agent AI Analyst."""
 
+from ai.agents.data_sql import answer_with_sql, data_agent, generate_sql
 from ai.agents.retriever import merge_documents, retrieve, retriever_agent
 from ai.agents.web import web_agent, web_search
 
 __all__ = [
+    "answer_with_sql",
+    "data_agent",
+    "generate_sql",
     "merge_documents",
     "retrieve",
     "retriever_agent",
