@@ -1,0 +1,32 @@
+
+# --- Orchestration --------------------------------------------------
+langgraph
+langchain
+langchain-community
+
+# --- LLM + embeddings: Gemini (fixed stack, no OpenAI) --------------
+langchain-google-genai
+google-generativeai
+
+# --- Vector store -----------------------------------------------------
+qdrant-client
+langchain-qdrant
+
+# --- Web search (F4, optional) -----------------------------------------
+tavily-python
+
+# --- Observability (F12) -------------------------------------------------
+langfuse
+
+# --- Evaluation harness (F11) ---------------------------------------------
+ragas
+datasets
+
+# --- Backend: FastAPI + SSE (F13) -----------------------------------------
+fastapi
+uvicorn[standard]
+sse-starlette
+
+# --- Config / utils ---------------------------------------------------------
+python-dotenv
+pydantic

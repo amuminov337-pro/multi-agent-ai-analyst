@@ -1,0 +1,23 @@
+# --- secrets ----------------------------------------------------------
+.env
+
+# --- data (SQLite db + embedded Qdrant) --------------------------------
+data/
+
+# --- Python -------------------------------------------------------------
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# --- Next.js frontend -----------------------------------------------------
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+
+# --- editors / OS -----------------------------------------------------------
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
