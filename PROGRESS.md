@@ -7,7 +7,7 @@ A feature is only marked done when its "Done when" condition is demonstrated liv
 |---|---------|-------|--------|--------|------|
 | F1 | Shared state & config | 1 | 5 | ✅ done | 2026-07-25 |
 | F2 | Ingestion & vector store | 1 | 10 | ✅ done | 2026-07-25 |
-| F3 | Retriever agent | 2 | 6 | ⬜ todo | — |
+| F3 | Retriever agent | 2 | 6 | ✅ done | 2026-07-26 |
 | F4 | Web agent (Tavily) | 2 | 6 | ⬜ todo | — |
 | F5 | Data agent — text-to-SQL | 2 | 10 | ⬜ todo | — |
 | F6 | Code agent — Python | 2 | 8 | ⬜ todo | — |
@@ -20,9 +20,11 @@ A feature is only marked done when its "Done when" condition is demonstrated liv
 | F13 | Streaming frontend | 5 | 5 | ⬜ todo | — |
 | F14 | Deployment | 5 | 5 | ⬜ todo | — |
 
-**Earned so far: 15 / 100**
+**Earned so far: 21 / 100**
 
 **Phase 1 · Foundation: ✅ complete (15/15)**
+
+**Phase 2 · Specialist agents: F3 done, F4–F6 remaining**
 
 ## F1 — Shared state & config (5/5)
 
@@ -44,6 +46,11 @@ A feature is only marked done when its "Done when" condition is demonstrated liv
 - Verified with `python scripts/check_f2.py` → PASS: a document was ingested
   into an isolated Qdrant collection and a similarity search on an unrelated
   query correctly retrieved the chunk containing the planted fact.
+
+## F3 — Retriever agent (6/6)
+
+- `ai/agents/retriever.py` — retriever agent node.
+- Verified with `python scripts/check_f3.py` → PASS.
 
 ## Final deliverables checklist (collect as we go)
 
