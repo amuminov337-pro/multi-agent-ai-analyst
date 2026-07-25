@@ -6,7 +6,7 @@ A feature is only marked done when its "Done when" condition is demonstrated liv
 | # | Feature | Phase | Points | Status | Date |
 |---|---------|-------|--------|--------|------|
 | F1 | Shared state & config | 1 | 5 | ✅ done | 2026-07-25 |
-| F2 | Ingestion & vector store | 1 | 10 | ⬜ todo | — |
+| F2 | Ingestion & vector store | 1 | 10 | ✅ done | 2026-07-25 |
 | F3 | Retriever agent | 2 | 6 | ⬜ todo | — |
 | F4 | Web agent (Tavily) | 2 | 6 | ⬜ todo | — |
 | F5 | Data agent — text-to-SQL | 2 | 10 | ⬜ todo | — |
@@ -20,7 +20,9 @@ A feature is only marked done when its "Done when" condition is demonstrated liv
 | F13 | Streaming frontend | 5 | 5 | ⬜ todo | — |
 | F14 | Deployment | 5 | 5 | ⬜ todo | — |
 
-**Earned so far: 5 / 100**
+**Earned so far: 15 / 100**
+
+**Phase 1 · Foundation: ✅ complete (15/15)**
 
 ## F1 — Shared state & config (5/5)
 
@@ -33,6 +35,15 @@ A feature is only marked done when its "Done when" condition is demonstrated liv
   (gemini-2.5-flash and text-embedding-004 are deprecated for new users).
 - Verified with `python scripts/check_f1.py` → PASS, live Gemini call succeeded.
 - Git repo initialised, first commit made, `.env` confirmed excluded via `.gitignore`.
+
+## F2 — Ingestion & vector store (10/10)
+
+- `ai/ingestion.py` — chunk + embed + store pipeline (`ingest_documents`).
+- `ai/vectorstore.py` — Qdrant collection helpers (`get_vectorstore`,
+  `collection_count`, `embedding_dimension`).
+- Verified with `python scripts/check_f2.py` → PASS: a document was ingested
+  into an isolated Qdrant collection and a similarity search on an unrelated
+  query correctly retrieved the chunk containing the planted fact.
 
 ## Final deliverables checklist (collect as we go)
 
