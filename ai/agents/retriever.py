@@ -23,16 +23,12 @@ from ai.state import AgentState, push_step
 from ai.vectorstore import get_vectorstore
 
 
-def retrieve(question: str, k: Optional[int] = None) -> List[Document]:
-    """Plain similarity search — reusable by F10 memory and F11 eval."""
-    settings = get_settings()
-    top_k = k if k is not None else settings.retriever_k
-    store = get_vectorstore()
-    return store.similarity_search(question, k=top_k)
+def merge_documents(existing: List[str], new: List[str]) -> List[str]:
+    """Merge two chunk lists, keeping order and dropping repeats.
 
-
-def _dedupe(existing: List[str], new: List[str]) -> List[str]:
-    """Merge two chunk lists, keeping order and dropping repeats."""
+    Shared by every agent that writes into state["documents"] (F3 retriever,
+    F4 web) so evidence accumulates instead of overwriting.
+    """
     merged: List[str] = []
     seen = set()
     for text in list(existing) + list(new):
@@ -41,6 +37,14 @@ def _dedupe(existing: List[str], new: List[str]) -> List[str]:
             seen.add(key)
             merged.append(text)
     return merged
+
+
+def retrieve(question: str, k: Optional[int] = None) -> List[Document]:
+    """Plain similarity search — reusable by F10 memory and F11 eval."""
+    settings = get_settings()
+    top_k = k if k is not None else settings.retriever_k
+    store = get_vectorstore()
+    return store.similarity_search(question, k=top_k)
 
 
 def retriever_agent(state: AgentState) -> dict:
@@ -56,6 +60,6 @@ def retriever_agent(state: AgentState) -> dict:
         label = f"retriever(failed: {type(exc).__name__})"
 
     return {
-        "documents": _dedupe(state.get("documents") or [], texts),
+        "documents": merge_documents(state.get("documents") or [], texts),
         "steps": push_step(state, label),
     }
