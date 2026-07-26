@@ -27,6 +27,7 @@ from ai.state import (  # noqa: E402
 EXPECTED_KEYS = {
     "question",
     "plan",
+    "visited",
     "documents",
     "sql_result",
     "code_result",

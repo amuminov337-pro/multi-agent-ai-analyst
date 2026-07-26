@@ -11,7 +11,7 @@ A feature is only marked done when its "Done when" condition is demonstrated liv
 | F4 | Web agent (Tavily) | 2 | 6 | ✅ done | 2026-07-26 |
 | F5 | Data agent — text-to-SQL | 2 | 10 | ✅ done | 2026-07-26 |
 | F6 | Code agent — Python | 2 | 8 | ✅ done | 2026-07-26 |
-| F7 | Supervisor / Router | 3 | 10 | ⬜ todo | — |
+| F7 | Supervisor / Router | 3 | 10 | ✅ done | 2026-07-26 |
 | F8 | Critic / Verifier | 3 | 7 | ⬜ todo | — |
 | F9 | Supervisor graph (wiring) | 3 | 8 | ⬜ todo | — |
 | F10 | Long-term memory | 4 | 5 | ⬜ todo | — |
@@ -20,11 +20,13 @@ A feature is only marked done when its "Done when" condition is demonstrated liv
 | F13 | Streaming frontend | 5 | 5 | ⬜ todo | — |
 | F14 | Deployment | 5 | 5 | ⬜ todo | — |
 
-**Earned so far: 45 / 100**
+**Earned so far: 55 / 100**
 
 **Phase 1 · Foundation: ✅ complete (15/15)**
 
 **Phase 2 · Specialist agents: ✅ complete (30/30)**
+
+**Phase 3 · Orchestration: F7 done, F8-F9 qoldi**
 
 ## F1 — Shared state & config (5/5)
 
@@ -33,8 +35,9 @@ A feature is only marked done when its "Done when" condition is demonstrated liv
   integrations (Tavily, Langfuse) degrade to a disabled flag.
 - Environment: switched from Python 3.14 to 3.11 (venv) to avoid missing
   prebuilt wheels for ML dependencies used later (ragas, scipy).
-- Model defaults updated to gemini-3.6-flash / gemini-embedding-001
-  (gemini-2.5-flash and text-embedding-004 are deprecated for new users).
+- Model defaults updated to gemini-3.1-flash-lite / gemini-embedding-001
+  (gemini-2.5-flash hit a 404 as deprecated, and gemini-3.6-flash's free-tier
+  quota was too low; gemini-3.1-flash-lite is a stable, probed-working name).
 - Verified with `python scripts/check_f1.py` → PASS, live Gemini call succeeded.
 - Git repo initialised, first commit made, `.env` confirmed excluded via `.gitignore`.
 
@@ -75,6 +78,8 @@ A feature is only marked done when its "Done when" condition is demonstrated liv
 - Verified with `python scripts/check_f6.py` → PASS: 13/13 sandbox attacks
   rejected, runtime cap killed an infinite loop at 3s, no secrets leaked
   into the child process.
+
+## F7 — Supervisor / Router: ✅ DONE (10/10 points), sana: 2026-07-26, deterministic guard: 14/14 test o'tdi, visited-tracking orqali takroriy routing kod darajasida bloklandi, LLM model gemini-3.1-flash-lite ga o'zgartirildi (kvota muammosi tufayli)
 
 ## Final deliverables checklist (collect as we go)
 

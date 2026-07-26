@@ -132,7 +132,7 @@ def get_settings() -> Settings:
 
     settings = Settings(
         google_api_key=_req("GOOGLE_API_KEY"),
-        gemini_model=_opt("GEMINI_MODEL", "gemini-3.6-flash"),
+        gemini_model=_opt("GEMINI_MODEL", "gemini-3.1-flash-lite"),
         gemini_embed_model=_opt("GEMINI_EMBED_MODEL", "models/gemini-embedding-001"),
         qdrant_url=_opt("QDRANT_URL"),
         qdrant_api_key=_opt("QDRANT_API_KEY"),

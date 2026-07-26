@@ -45,7 +45,7 @@ Rules:
 def _llm() -> ChatGoogleGenerativeAI:
     """Chat model for SQL generation.
 
-    No temperature is set: gemini-3.6-flash uses fixed sampling defaults
+    No temperature is set: gemini-3.1-flash-lite uses fixed sampling defaults
     and warns on every call when the parameter is passed.
     """
     settings = get_settings()

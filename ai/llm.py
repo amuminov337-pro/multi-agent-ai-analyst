@@ -17,7 +17,7 @@ from ai.config import get_settings
 def get_llm() -> ChatGoogleGenerativeAI:
     """Chat model configured from .env.
 
-    No temperature is passed: gemini-3.6-flash uses fixed sampling
+    No temperature is passed: gemini-3.1-flash-lite uses fixed sampling
     defaults and emits a UserWarning on every call when it is supplied.
     """
     settings = get_settings()

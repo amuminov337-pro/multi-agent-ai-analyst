@@ -18,6 +18,7 @@ class AgentState(TypedDict):
 
     # --- supervisor decision (F7) ------------------------------------
     plan: str
+    visited: List[str]
 
     # --- evidence collected by the specialist agents (F3-F6) ---------
     documents: List[str]
@@ -55,6 +56,7 @@ def new_state(question: str, memory: Optional[List[str]] = None) -> AgentState:
     return AgentState(
         question=question.strip(),
         plan="",
+        visited=[],
         documents=[],
         sql_result=None,
         code_result=None,
@@ -74,6 +76,20 @@ def push_step(state: AgentState, label: str) -> List[str]:
         return {"documents": docs, "steps": push_step(state, "retriever")}
     """
     return list(state.get("steps", [])) + [label]
+
+
+def push_visited(state: AgentState, agent: str) -> List[str]:
+    """Return a NEW visited list with `agent` recorded once.
+
+    The supervisor (F7) marks an agent as visited when it delegates to it.
+    Keeping this in state — rather than trusting the LLM to remember what
+    it already called — is what makes the routing loop terminate for
+    structural reasons instead of behavioural ones.
+    """
+    visited = list(state.get("visited", []))
+    if agent and agent not in visited:
+        visited.append(agent)
+    return visited
 
 
 def evidence_bundle(state: AgentState) -> str:
