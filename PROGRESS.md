@@ -12,7 +12,7 @@ A feature is only marked done when its "Done when" condition is demonstrated liv
 | F5 | Data agent — text-to-SQL | 2 | 10 | ✅ done | 2026-07-26 |
 | F6 | Code agent — Python | 2 | 8 | ✅ done | 2026-07-26 |
 | F7 | Supervisor / Router | 3 | 10 | ✅ done | 2026-07-26 |
-| F8 | Critic / Verifier | 3 | 7 | ⬜ todo | — |
+| F8 | Critic / Verifier | 3 | 7 | ✅ done | 2026-07-26 |
 | F9 | Supervisor graph (wiring) | 3 | 8 | ⬜ todo | — |
 | F10 | Long-term memory | 4 | 5 | ⬜ todo | — |
 | F11 | Evaluation harness | 4 | 10 | ⬜ todo | — |
@@ -20,13 +20,13 @@ A feature is only marked done when its "Done when" condition is demonstrated liv
 | F13 | Streaming frontend | 5 | 5 | ⬜ todo | — |
 | F14 | Deployment | 5 | 5 | ⬜ todo | — |
 
-**Earned so far: 55 / 100**
+**Earned so far: 62 / 100**
 
 **Phase 1 · Foundation: ✅ complete (15/15)**
 
 **Phase 2 · Specialist agents: ✅ complete (30/30)**
 
-**Phase 3 · Orchestration: F7 done, F8-F9 qoldi**
+**Phase 3 · Orchestration: F7, F8 done, F9 qoldi**
 
 ## F1 — Shared state & config (5/5)
 
@@ -80,6 +80,8 @@ A feature is only marked done when its "Done when" condition is demonstrated liv
   into the child process.
 
 ## F7 — Supervisor / Router: ✅ DONE (10/10 points), sana: 2026-07-26, deterministic guard: 14/14 test o'tdi, visited-tracking orqali takroriy routing kod darajasida bloklandi, LLM model gemini-3.1-flash-lite ga o'zgartirildi (kvota muammosi tufayli)
+
+## F8 — Critic / Verifier: ✅ DONE (7/7 points), sana: 2026-07-26, deterministic pre-check + LLM grounding tekshiruvi, 3/3 buzuq javob ushlandi (noto'g'ri raqam, o'ylab topilgan fakt, mavzudan chetga chiqish), revision cap ishladi
 
 ## Final deliverables checklist (collect as we go)
 
