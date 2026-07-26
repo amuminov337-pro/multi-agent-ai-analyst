@@ -10,7 +10,7 @@ A feature is only marked done when its "Done when" condition is demonstrated liv
 | F3 | Retriever agent | 2 | 6 | ✅ done | 2026-07-26 |
 | F4 | Web agent (Tavily) | 2 | 6 | ✅ done | 2026-07-26 |
 | F5 | Data agent — text-to-SQL | 2 | 10 | ✅ done | 2026-07-26 |
-| F6 | Code agent — Python | 2 | 8 | ⬜ todo | — |
+| F6 | Code agent — Python | 2 | 8 | ✅ done | 2026-07-26 |
 | F7 | Supervisor / Router | 3 | 10 | ⬜ todo | — |
 | F8 | Critic / Verifier | 3 | 7 | ⬜ todo | — |
 | F9 | Supervisor graph (wiring) | 3 | 8 | ⬜ todo | — |
@@ -20,11 +20,11 @@ A feature is only marked done when its "Done when" condition is demonstrated liv
 | F13 | Streaming frontend | 5 | 5 | ⬜ todo | — |
 | F14 | Deployment | 5 | 5 | ⬜ todo | — |
 
-**Earned so far: 37 / 100**
+**Earned so far: 45 / 100**
 
 **Phase 1 · Foundation: ✅ complete (15/15)**
 
-**Phase 2 · Specialist agents: F3, F4, F5 done, F6 remaining**
+**Phase 2 · Specialist agents: ✅ complete (30/30)**
 
 ## F1 — Shared state & config (5/5)
 
@@ -67,6 +67,14 @@ A feature is only marked done when its "Done when" condition is demonstrated liv
 - Verified with `python scripts/check_f5.py` → PASS: correct answers on 3
   ground-truth questions, 10/10 malicious SQL attacks rejected, OS-level
   read-only connection confirmed (write blocked by SQLite itself).
+
+## F6 — Code agent (8/8)
+
+- `ai/agents/code_agent.py` — sandboxed Python code agent with subprocess
+  isolation and a hard runtime cap.
+- Verified with `python scripts/check_f6.py` → PASS: 13/13 sandbox attacks
+  rejected, runtime cap killed an infinite loop at 3s, no secrets leaked
+  into the child process.
 
 ## Final deliverables checklist (collect as we go)
 
