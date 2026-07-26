@@ -10,6 +10,7 @@ from ai.agents.critic import (
     verify,
 )
 from ai.agents.data_sql import answer_with_sql, data_agent, generate_sql
+from ai.agents.generate import generate_agent
 from ai.agents.retriever import merge_documents, retrieve, retriever_agent
 from ai.agents.supervisor import (
     AGENT_ROUTES,
@@ -32,6 +33,7 @@ __all__ = [
     "data_agent",
     "decide",
     "enforce_route",
+    "generate_agent",
     "generate_code",
     "generate_sql",
     "has_evidence",

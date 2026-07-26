@@ -1,0 +1,33 @@
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	supervisor(supervisor)
+	retriever(retriever)
+	web(web)
+	data(data)
+	code(code)
+	generate(generate)
+	critic(critic)
+	revise(revise)
+	__end__([<p>__end__</p>]):::last
+	__start__ --> supervisor;
+	code --> supervisor;
+	critic -. &nbsp;finish&nbsp; .-> __end__;
+	critic -.-> revise;
+	data --> supervisor;
+	generate --> critic;
+	retriever --> supervisor;
+	revise --> supervisor;
+	supervisor -.-> code;
+	supervisor -.-> data;
+	supervisor -. &nbsp;finish&nbsp; .-> generate;
+	supervisor -.-> retriever;
+	supervisor -.-> web;
+	web --> supervisor;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc
