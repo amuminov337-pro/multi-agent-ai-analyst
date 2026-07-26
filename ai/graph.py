@@ -1,4 +1,4 @@
-"""The supervisor multi-agent graph (F9).
+"""The supervisor multi-agent graph (F9) with long-term memory (F10).
 
 Wiring, exactly as the guide specifies:
 
@@ -9,7 +9,7 @@ Wiring, exactly as the guide specifies:
     critic --(verdict)--> END | revise
     revise -> supervisor
 
-Three points worth stating explicitly, because each is a correctness trap:
+Four points worth stating explicitly, because each is a correctness trap:
 
 1. NO STATE REDUCERS. AgentState is a plain TypedDict, so LangGraph replaces
    each returned key. That is what we want: every node already returns the
@@ -29,12 +29,19 @@ Three points worth stating explicitly, because each is a correctness trap:
    requires — but set too low it would abort legitimate work instead of
    catching a runaway. required_recursion_limit() derives the true worst case
    from those two bounds, and safe_recursion_limit() never goes below it.
+
+4. MEMORY LIVES OUTSIDE THE GRAPH, not in a node. Recall happens before the
+   graph starts (the condensed question must be settled before the supervisor
+   routes) and writing happens after it finishes (only a verified answer is
+   worth storing). Keeping both out of the graph also means use_memory=False
+   gives F11 fully reproducible evaluation runs — with memory on, re-running
+   the same question would see its own previous answer.
 """
 
 from __future__ import annotations
 
 from functools import lru_cache
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 from langgraph.graph import END, START, StateGraph
 
@@ -46,6 +53,7 @@ from ai.agents.retriever import retriever_agent
 from ai.agents.supervisor import AGENT_ROUTES, supervisor
 from ai.agents.web import web_agent
 from ai.config import get_settings
+from ai.memory import condense_question, recall, remember, should_remember
 from ai.state import AgentState, new_state
 
 #: Node names, in the order the graph reaches them.
@@ -145,10 +153,37 @@ def get_graph(use_critic: bool = True):
     return build_graph(use_critic=use_critic)
 
 
+def prepare_question(
+    question: str,
+    memory: Optional[List[str]],
+    use_memory: bool,
+) -> Tuple[str, List[str], Optional[str]]:
+    """Resolve the question against long-term memory before routing.
+
+    Returns (question_to_use, recalled_memory, condensed_from). The third
+    value is the ORIGINAL question when a rewrite happened, so the trace can
+    show what the user actually typed — no extra AgentState field needed.
+
+    An explicitly supplied `memory` list is used as-is; that is how the F10
+    check drives the condenser deterministically.
+    """
+    recalled = list(memory) if memory is not None else (
+        recall(question) if use_memory else []
+    )
+    if not recalled:
+        return question, recalled, None
+
+    resolved = condense_question(question, recalled)
+    if resolved.strip().lower() == question.strip().lower():
+        return question, recalled, None
+    return resolved, recalled, question
+
+
 def run(
     question: str,
     memory: Optional[List[str]] = None,
     use_critic: bool = True,
+    use_memory: bool = True,
     callbacks: Optional[list] = None,
     recursion_limit: Optional[int] = None,
 ) -> AgentState:
@@ -162,7 +197,11 @@ def run(
     backend (F14) must not return a 500 because one question mis-routed.
     """
     app = get_graph(use_critic=use_critic)
-    state = new_state(question, memory=memory)
+    resolved, recalled, condensed_from = prepare_question(question, memory, use_memory)
+
+    state = new_state(resolved, memory=recalled)
+    if condensed_from:
+        state["steps"] = [f'memory(condensed from "{condensed_from}")']
 
     config: Dict[str, Any] = {
         "recursion_limit": recursion_limit or safe_recursion_limit()
@@ -171,7 +210,7 @@ def run(
         config["callbacks"] = callbacks
 
     try:
-        return app.invoke(state, config=config)
+        final = app.invoke(state, config=config)
     except Exception as exc:
         if "recursion" not in type(exc).__name__.lower() and "Recursion" not in str(exc):
             raise
@@ -187,28 +226,50 @@ def run(
             "steps": list(state.get("steps") or []) + ["ABORTED: recursion limit"],
         }
 
+    # The CONDENSED question is stored, not the fragment: a memory record of
+    # "Q: what about Data Science? A: 3" is useless to recall later.
+    if use_memory and should_remember(final, critic_enabled=use_critic):
+        if remember(resolved, final.get("answer") or ""):
+            final["steps"] = list(final.get("steps") or []) + ["memory(stored)"]
+
+    return final
+
 
 def stream(
     question: str,
     memory: Optional[List[str]] = None,
     use_critic: bool = True,
+    use_memory: bool = True,
     callbacks: Optional[list] = None,
 ):
     """Yield (node_name, state_update) as the graph runs.
 
     This is what the streaming frontend (F13) consumes to show which agent is
     acting live, so the graph exposes it now rather than being reshaped later.
+    Memory is written once the stream is exhausted.
     """
     app = get_graph(use_critic=use_critic)
-    state = new_state(question, memory=memory)
+    resolved, recalled, condensed_from = prepare_question(question, memory, use_memory)
+
+    state = new_state(resolved, memory=recalled)
+    if condensed_from:
+        state["steps"] = [f'memory(condensed from "{condensed_from}")']
+        yield "memory", {"steps": state["steps"]}
 
     config: Dict[str, Any] = {"recursion_limit": safe_recursion_limit()}
     if callbacks:
         config["callbacks"] = callbacks
 
+    final: Dict[str, Any] = dict(state)
     for chunk in app.stream(state, config=config):
         for node_name, update in chunk.items():
+            if isinstance(update, dict):
+                final.update(update)
             yield node_name, update
+
+    if use_memory and should_remember(final, critic_enabled=use_critic):
+        if remember(resolved, final.get("answer") or ""):
+            yield "memory", {"steps": ["memory(stored)"]}
 
 
 def mermaid_diagram(use_critic: bool = True) -> str:

@@ -234,7 +234,7 @@ def part_5_critic_off() -> bool:
         ("answer produced", bool(answer)),
         ("critic did NOT run", not any("critic" in s for s in steps)),
         ("no revisions happened", int(final.get("revisions", 0)) == 0),
-        ("answer contains the correct count", "3" in answer),
+        ("answer contains the correct count", _fact_present("3", answer)),
     ]
     for name, ok in checks:
         print(f"  [{'OK' if ok else 'FAIL'}] {name}")
