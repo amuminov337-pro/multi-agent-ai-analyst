@@ -16,7 +16,7 @@ langchain-qdrant
 tavily-python
 
 # --- Observability (F12) -------------------------------------------------
-langfuse
+langfuse>=3.0.0
 
 # --- Evaluation harness (F11) ---------------------------------------------
 ragas

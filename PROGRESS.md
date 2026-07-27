@@ -16,11 +16,11 @@ A feature is only marked done when its "Done when" condition is demonstrated liv
 | F9 | Supervisor graph (wiring) | 3 | 8 | ✅ done | 2026-07-26 |
 | F10 | Long-term memory | 4 | 5 | ✅ done | 2026-07-26 |
 | F11 | Evaluation harness | 4 | 10 | ✅ done | 2026-07-27 |
-| F12 | Observability (Langfuse) | 5 | 5 | ⬜ todo | — |
+| F12 | Observability (Langfuse) | 5 | 5 | ✅ done | 2026-07-27 |
 | F13 | Streaming frontend | 5 | 5 | ⬜ todo | — |
 | F14 | Deployment | 5 | 5 | ⬜ todo | — |
 
-**Earned so far: 85 / 100**
+**Jami: 90 / 100 (F13 va F14 qoldi)**
 
 **Phase 1 · Foundation: ✅ complete (15/15)**
 
@@ -91,11 +91,13 @@ A feature is only marked done when its "Done when" condition is demonstrated liv
 
 ## F11 — Evaluation harness: ✅ DONE (10/10 points), sana: 2026-07-27, 12 savol (4 doc, 4 sql, 2 code, 2 mixed), RAGAS (faithfulness/answer_relevancy/context_precision/context_recall) + LLM-judge + deterministik exact-match, critic bilan/critic'siz to'liq solishtiruv. Muhim topilma: critic ba'zi to'g'ri javoblarni rad etib, natijani yomonlashtirgan (exact match 0.833 vs 1.000) — bu xato tahliliga kiritiladi.
 
+## F12 — Langfuse observability: ✅ DONE (5/5 points), sana: 2026-07-27, `python scripts/check_f12.py` — trace'da supervisor→data→code→critic + 5418 token; Visual 3: documents/langfuse_trace.png
+
 ## Final deliverables checklist (collect as we go)
 
 - [ ] Visual 1 — supervisor multi-agent graph diagram
 - [ ] Visual 2 — frontend screenshot of a live multi-agent trace
-- [ ] Visual 3 — Langfuse trace of one complex question
+- [x] Visual 3 — Langfuse trace of one complex question
 - [ ] Visual 4 — RAGAS metrics table, with critic vs without critic
 - [ ] Error analysis — 3 failures, which agent failed, one fix each
 - [ ] README — diagram + metrics table + error analysis
