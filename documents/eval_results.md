@@ -37,7 +37,7 @@ Every run used `use_memory=False` so the comparison is reproducible.
 
 ## Failures
 
-### With critic — 2 failure(s)
+### With critic — 3 failure(s)
 
 **q03** (doc) — judge 2, exact match no
 - Question: What is the first response target for a severity 1 support ticket?
@@ -55,6 +55,27 @@ Every run used `use_memory=False` so the comparison is reproducible.
 - Trace: supervisor→data -> data(sql) -> supervisor→finish -> generate -> critic(approved)
 - Critic said: The answer accurately reflects the counts and sums provided in the SQL query result.
 
+**q_extra** (code) — judge n/a, exact match no
+- Question: Engineering bo'limida nechta xodim bor va ularning o'rtacha oylik maoshi qancha?
+  Shu o'rtacha maoshni Python bilan hisoblab, yillik summasini va 12 oyga taqsimlangan
+  jadvalini chiqar.
+- Expected: 4 xodim, 7187.5 (sql_result allaqachon state'da to'g'ri hisoblab qo'yilgan edi).
+- Got: 3 xodim, 1500.0.
+- Agents used: data, code
+- Xato bergan agent: code — sql_result'dagi haqiqiy natijani ishlatish o'rniga, kod ichida
+  qo'lda to'qilgan (xayoliy) xodimlar ro'yxatini yaratdi va shu asosda hisobladi.
+- Critic said: "accurately reflects the code-based evidence provided and addresses all parts
+  of the user's question."
+- Trace: https://cloud.langfuse.com/project/cms01yns40udiad0iocibqnjs/traces/891eecaef1b736e4fc8eff41b73932df
+
 ### Without critic — 0 failure(s)
 
 None.
+
+## Root cause across all 3 failures
+
+Critic solishtiradi javobni faqat O'ZI ISHLATGAN dalil bilan (grounding), lekin o'sha
+dalilning state'dagi boshqa, allaqachon to'g'ri hisoblangan natijaga (masalan sql_result)
+zid ekanini tekshirmaydi. Taklif etilgan tuzatish: critic promptiga state'dagi BARCHA
+tegishli evidence maydonlarini (sql_result + code_result) ko'rsatish va ular orasidagi
+nomuvofiqlikni aniq tekshirishni so'ragan qoida qo'shish.
