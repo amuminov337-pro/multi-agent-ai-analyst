@@ -17,10 +17,10 @@ A feature is only marked done when its "Done when" condition is demonstrated liv
 | F10 | Long-term memory | 4 | 5 | ✅ done | 2026-07-26 |
 | F11 | Evaluation harness | 4 | 10 | ✅ done | 2026-07-27 |
 | F12 | Observability (Langfuse) | 5 | 5 | ✅ done | 2026-07-27 |
-| F13 | Streaming frontend | 5 | 5 | ⬜ todo | — |
+| F13 | Streaming frontend | 5 | 5 | ✅ done | 2026-07-28 |
 | F14 | Deployment | 5 | 5 | ⬜ todo | — |
 
-**Jami: 90 / 100 (F13 va F14 qoldi)**
+**Jami: 95 / 100 (F14 qoldi)**
 
 **Phase 1 · Foundation: ✅ complete (15/15)**
 
@@ -93,10 +93,12 @@ A feature is only marked done when its "Done when" condition is demonstrated liv
 
 ## F12 — Langfuse observability: ✅ DONE (5/5 points), sana: 2026-07-27, `python scripts/check_f12.py` — trace'da supervisor→data→code→critic + 5418 token; Visual 3: documents/langfuse_trace.png
 
+## F13 — Backend (FastAPI+SSE) + frontend (Next.js): ✅ DONE (5/5 points), sana: 2026-07-28, `python scripts/check_f13.py` — SSE jonli oqim, 8 qadam 18.5s ga tarqalgan; Visual 2: documents/frontend_trace.png
+
 ## Final deliverables checklist (collect as we go)
 
 - [ ] Visual 1 — supervisor multi-agent graph diagram
-- [ ] Visual 2 — frontend screenshot of a live multi-agent trace
+- [x] Visual 2 — frontend screenshot of a live multi-agent trace
 - [x] Visual 3 — Langfuse trace of one complex question
 - [ ] Visual 4 — RAGAS metrics table, with critic vs without critic
 - [ ] Error analysis — 3 failures, which agent failed, one fix each
