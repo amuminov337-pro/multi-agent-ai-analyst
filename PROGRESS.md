@@ -18,9 +18,9 @@ A feature is only marked done when its "Done when" condition is demonstrated liv
 | F11 | Evaluation harness | 4 | 10 | ✅ done | 2026-07-27 |
 | F12 | Observability (Langfuse) | 5 | 5 | ✅ done | 2026-07-27 |
 | F13 | Streaming frontend | 5 | 5 | ✅ done | 2026-07-28 |
-| F14 | Deployment | 5 | 5 | ⬜ todo | — |
+| F14 | Deploy (Render + Vercel) | 5 | 5 | ✅ done | 2026-07-28 |
 
-**Jami: 95 / 100 (F14 qoldi)**
+**Jami: 100 / 100 — barcha F1-F14 tugadi**
 
 **Phase 1 · Foundation: ✅ complete (15/15)**
 
@@ -94,6 +94,8 @@ A feature is only marked done when its "Done when" condition is demonstrated liv
 ## F12 — Langfuse observability: ✅ DONE (5/5 points), sana: 2026-07-27, `python scripts/check_f12.py` — trace'da supervisor→data→code→critic + 5418 token; Visual 3: documents/langfuse_trace.png
 
 ## F13 — Backend (FastAPI+SSE) + frontend (Next.js): ✅ DONE (5/5 points), sana: 2026-07-28, `python scripts/check_f13.py` — SSE jonli oqim, 8 qadam 18.5s ga tarqalgan; Visual 2: documents/frontend_trace.png
+
+## F14 — Deploy (Render + Vercel): ✅ DONE (5/5 points), sana: 2026-07-28, `python scripts/check_f14.py --api --web` — ikkala ommaviy havola real savolga javob berdi, trace qaytadi
 
 ## Final deliverables checklist (collect as we go)
 
