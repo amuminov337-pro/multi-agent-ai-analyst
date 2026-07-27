@@ -1,0 +1,45 @@
+# Render Blueprint - F14 backend deploy.
+#
+# Ikkita nozik joy:
+#   1) data/company.db git'da yo'q, shuning uchun build vaqtida seed_db.py bilan qayta quriladi.
+#   2) $PORT ni Render beradi - uvicorn 0.0.0.0 va $PORT ga bog'lanishi SHART,
+#      aks holda servis "no open ports detected" bilan yiqiladi.
+
+services:
+  - type: web
+    name: multi-agent-ai-analyst-api
+    runtime: python
+    plan: free
+    region: frankfurt
+    buildCommand: "pip install -r requirements-deploy.txt && python scripts/seed_db.py"
+    startCommand: "uvicorn backend.app:app --host 0.0.0.0 --port $PORT"
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.9"
+      - key: PYTHONIOENCODING
+        value: "utf-8"
+      # Quyidagilarning qiymatlari Render panelida qo'lda kiritiladi (sync: false),
+      # hech qachon repo'ga yozilmaydi.
+      - key: GOOGLE_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        sync: false
+      - key: GEMINI_EMBED_MODEL
+        sync: false
+      - key: QDRANT_URL
+        sync: false
+      - key: QDRANT_API_KEY
+        sync: false
+      - key: TAVILY_API_KEY
+        sync: false
+      - key: LANGFUSE_PUBLIC_KEY
+        sync: false
+      - key: LANGFUSE_SECRET_KEY
+        sync: false
+      - key: LANGFUSE_HOST
+        sync: false
+      - key: RECURSION_LIMIT
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false

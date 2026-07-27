@@ -1,0 +1,23 @@
+# Deploy uchun qisqartirilgan ro'yxat (Render free = 512 MB RAM).
+# ragas/datasets ATAYLAB yo'q - ular faqat F11 baholash harness'ida ishlatiladi
+# va serverda hech qachon import qilinmaydi (backend/app.py -> ai.graph -> agentlar).
+
+langgraph
+langchain
+langchain-community
+
+langchain-google-genai
+google-generativeai
+
+qdrant-client
+langchain-qdrant
+
+tavily-python
+langfuse>=3.0.0
+
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+sse-starlette
+
+python-dotenv
+pydantic
